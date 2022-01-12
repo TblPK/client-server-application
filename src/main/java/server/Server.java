@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package Server;
+package server;
 
-import Connection.Connection;
-import Connection.Message;
-import Connection.MessageType;
+import connection.Connection;
+import connection.Message;
+import connection.MessageType;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -147,7 +147,7 @@ public class Server {
                 String userName = Message.getTextMessage();
 
                 if(Message.getTypeMessage() == MessageType.USER_NAME && !userName.isBlank() && !listOfUsers.containsKey(
-                        userName) && !userName.equals("Server")) {
+                        userName) && !userName.equals("server")) {
                     listOfUsers.put(userName, connection);
                     Set<String> listUser = new TreeSet<>(listOfUsers.keySet());
                     //Sending the list of connected users to the user

@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package Client;
+package client;
 
-import Connection.Connection;
-import Connection.Message;
-import Connection.MessageType;
+import connection.Connection;
+import connection.Message;
+import connection.MessageType;
 
 import java.net.Socket;
 import java.util.Set;

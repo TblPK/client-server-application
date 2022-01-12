@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package Server;
+package server;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ import java.awt.event.WindowEvent;
 
 public class GuiServer {
     private final JTextArea infoField = new JTextArea(15, 40);
-    private final JFrame frame = new JFrame("Server");
+    private final JFrame frame = new JFrame("server");
     private final JButton buttonStartServer = new JButton("Start Server");
     private final JButton buttonStopServer = new JButton("Stop Server");
     private final JButton buttonSendMessage = new JButton("Send message");

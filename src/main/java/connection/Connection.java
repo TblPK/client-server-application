@@ -22,45 +22,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package Connection;
+package connection;
 
-import java.io.Serializable;
-import java.util.Set;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
-//The class that creates the message type
-public class Message implements Serializable {
-    private final String textMessage;
-    private final MessageType typeMessage;
-    private final Set<String> listOfUsers;
+//Creating an input/output stream with a new socket
+public class Connection implements AutoCloseable {
+    private final Socket socket;
+    private final ObjectOutputStream out;
+    private final ObjectInputStream in;
 
-    public Message(MessageType typeMessage) {
-        this.textMessage = null;
-        this.typeMessage = typeMessage;
-        this.listOfUsers = null;
+    public Connection(Socket socket) throws Exception {
+        this.socket = socket;
+        this.out = new ObjectOutputStream(socket.getOutputStream());
+        this.in = new ObjectInputStream(socket.getInputStream());
     }
 
-    public Message(MessageType typeMessage, String textMessage) {
-        this.typeMessage = typeMessage;
-        this.textMessage = textMessage;
-        this.listOfUsers = null;
+    public synchronized void send(Message message) throws Exception {
+        out.writeObject(message);
     }
 
-    public Message(MessageType typeMessage, Set<String> listOfUsers) {
-        this.textMessage = null;
-        this.typeMessage = typeMessage;
-        this.listOfUsers = listOfUsers;
+    public Message receive() throws Exception {
+        return (Message) in.readObject();
     }
 
-    public MessageType getTypeMessage() {
-        return typeMessage;
+    @Override
+    public void close() throws Exception {
+            in.close();
+            out.close();
+            socket.close();
     }
-
-    public Set<String> getListOfUsers() {
-        return listOfUsers;
-    }
-
-    public String getTextMessage() {
-        return textMessage;
-    }
-
 }
