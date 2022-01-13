@@ -50,8 +50,8 @@ public class Connection implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-            in.close();
-            out.close();
-            socket.close();
+        in.close();
+        out.close();
+        socket.close();
     }
 }
