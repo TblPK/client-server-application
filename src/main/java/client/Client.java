@@ -1,27 +1,3 @@
-/*
-MIT License
-
-Copyright (c) 2022 Sapaev Murat
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
-
 package client;
 
 import connection.Connection;
@@ -31,8 +7,11 @@ import connection.MessageType;
 import java.net.Socket;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Client {
+    private static final Logger logger = Logger.getLogger(Client.class.getName());
     private static GuiClient gui;
     private static Set<String> listOfUsers;
     private static volatile boolean isConnection = false;
@@ -51,8 +30,7 @@ public class Client {
                     client.nameUserRegistration();
                     client.receiveMessageFromServer();
                 } catch(Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e.getMessage());
+                    logger.log(Level.INFO, e.getMessage());
                     gui.errorDialogWindow("Error: the connection's been lost. Please, try reconnecting.");
                     gui.setWorkingStatusButtons(false);
                     isConnection = false;
@@ -70,8 +48,7 @@ public class Client {
             gui.setWorkingStatusButtons(true);
             isConnection = true;
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, e.getMessage());
             gui.errorDialogWindow("Invalid address or port. Please, try again.");
         }
     }
@@ -86,8 +63,7 @@ public class Client {
                 gui.refreshUsersField(listOfUsers);
             } catch(Exception e) {
                 gui.refreshUsersField(listOfUsers);
-                e.printStackTrace();
-                System.out.println(e.getMessage());
+                logger.log(Level.INFO, e.getMessage());
                 gui.errorDialogWindow("Error: when disconnecting. Try reconnecting.");
             }
         }
@@ -97,8 +73,7 @@ public class Client {
         try {
             connection.send(new Message(MessageType.TEXT_MESSAGE, text));
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, e.getMessage());
             gui.errorDialogWindow("Error: sending a new message. Try reconnecting.");
         }
     }
