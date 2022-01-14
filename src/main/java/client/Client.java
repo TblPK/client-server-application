@@ -31,8 +31,11 @@ import connection.MessageType;
 import java.net.Socket;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Client {
+    private static final Logger logger = Logger.getLogger(Client.class.getName());
     private static GuiClient gui;
     private static Set<String> listOfUsers;
     private static volatile boolean isConnection = false;
@@ -51,8 +54,7 @@ public class Client {
                     client.nameUserRegistration();
                     client.receiveMessageFromServer();
                 } catch(Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e.getMessage());
+                    logger.log(Level.INFO, e.getMessage());
                     gui.errorDialogWindow("Error: the connection's been lost. Please, try reconnecting.");
                     gui.setWorkingStatusButtons(false);
                     isConnection = false;
@@ -70,8 +72,7 @@ public class Client {
             gui.setWorkingStatusButtons(true);
             isConnection = true;
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, e.getMessage());
             gui.errorDialogWindow("Invalid address or port. Please, try again.");
         }
     }
@@ -86,8 +87,7 @@ public class Client {
                 gui.refreshUsersField(listOfUsers);
             } catch(Exception e) {
                 gui.refreshUsersField(listOfUsers);
-                e.printStackTrace();
-                System.out.println(e.getMessage());
+                logger.log(Level.INFO, e.getMessage());
                 gui.errorDialogWindow("Error: when disconnecting. Try reconnecting.");
             }
         }
@@ -97,8 +97,7 @@ public class Client {
         try {
             connection.send(new Message(MessageType.TEXT_MESSAGE, text));
         } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, e.getMessage());
             gui.errorDialogWindow("Error: sending a new message. Try reconnecting.");
         }
     }

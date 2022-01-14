@@ -147,7 +147,7 @@ public class Server {
                 String userName = Message.getTextMessage();
 
                 if(Message.getTypeMessage() == MessageType.USER_NAME && !userName.isBlank() && !listOfUsers.containsKey(
-                        userName) && !userName.equals("server")) {
+                        userName) && !userName.equalsIgnoreCase("server")) {
                     listOfUsers.put(userName, connection);
                     Set<String> listUser = new TreeSet<>(listOfUsers.keySet());
                     //Sending the list of connected users to the user
