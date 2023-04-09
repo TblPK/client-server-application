@@ -1,2 +1,2 @@
 # client-server-application
-A simple Client/Server application.
+Simple Client/Server application.
